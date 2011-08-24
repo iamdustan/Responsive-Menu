@@ -10,7 +10,8 @@
     var settings = {
       switchWidth: 768,
       topOptionText: 'Select a page',
-      indentString: '&nbsp;&nbsp;&nbsp;'
+      indentString: '&nbsp;&nbsp;&nbsp;',
+      depth : 1
     };
     
     
@@ -77,9 +78,15 @@
         $this.find('li').each(function(){
           
           //when sub-item, indent
-          var levelStr = '';
-          var len = $(this).parents('ul, ol').length;
-          for(i=1;i<len;i++){levelStr += settings.indentString;}
+          var levelStr = '',
+              len = $(this).parents('ul, ol').length,
+              link, text;
+              
+          if( len <= settings.depth ) {
+  					for(i=1;i<len;i++){levelStr += settings.indentString;}
+					} else {
+						return;
+					}
           
           //get url and text for option
           var link = $(this).find('a:first-child').attr('href');
